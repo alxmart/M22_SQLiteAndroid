@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
         //val dbHelper = DatabaseHelper(this)
 
         with(binding) {
@@ -34,19 +35,17 @@ class MainActivity : AppCompatActivity() {
                 listar()
             }
 
-
-
-
         }
-
-
-
-
     }
 
     private fun listar() {
 
+        val sql = "SELECT * FROM produtos"
+        val cursor = bancoDados.readableDatabase.rawQuery(sql, null)
 
+        while ( cursor.moveToNext() ) {
+            Log.i("info_db", "posicao: ${cursor.position}")
+        }
     }
 
     override fun onResume() {
