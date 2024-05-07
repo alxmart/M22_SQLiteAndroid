@@ -40,11 +40,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun listar() {
 
-        val sql = "SELECT * FROM produtos"
+        val sql = "SELECT * FROM ${DatabaseHelper.TABELA_PRODUTOS};"
         val cursor = bancoDados.readableDatabase.rawQuery(sql, null)
 
-        while ( cursor.moveToNext() ) {
-            Log.i("info_db", "posicao: ${cursor.position}")
+        while ( cursor.moveToNext() ) {  // false ou true
+
+            val idProduto = cursor.getInt(0)
+            val titulo = cursor.getString(1)
+            val descricao = cursor.getString(2)
+
+            Log.i("info_db",
+                  "id: $idProduto, titulo: $titulo, descricao: $descricao")
         }
     }
 
