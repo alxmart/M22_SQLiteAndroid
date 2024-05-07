@@ -8,7 +8,7 @@ import android.util.Log
 class DatabaseHelper(contex: Context): SQLiteOpenHelper(
     // 1) Contexto,        2) Nome do BD,
     // 3) CursosrFactory,  4) Versão do BD
-    contex, "loja.db", null, 1
+    contex, "loja.db", null, 2
 ) {
     override fun onCreate(db: SQLiteDatabase?) {
 
@@ -27,10 +27,11 @@ class DatabaseHelper(contex: Context): SQLiteOpenHelper(
             e.printStackTrace()
             Log.i("info_db", "Erro ao criar a tabela")
         }
-
     }
 
     override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {
+
+        Log.i("info_db", "Executou onUpgrade")
 
     }
 }
