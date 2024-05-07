@@ -24,13 +24,57 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         //val dbHelper = DatabaseHelper(this)
 
-        try {
-            bancoDados.writableDatabase.execSQL(
-                "INSERT INTO produtos VALUES(null, 'Notebook Acer', 'Descricao...');"
-            )
-            Log.i("info_db", "Sucesso ao inserir")
-        } catch (e: Exception) {
-            Log.i("info_db", "Erro ao inserir")
+        with(binding) {
+
+            btnSalvar.setOnClickListener {
+                salvar()
+            }
+
+            btnListar.setOnClickListener {
+                listar()
+            }
+
+
+
+
         }
+
+
+
+
     }
+
+    private fun listar() {
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        salvar()
+    }
+
+        private fun salvar() {
+
+            val titulo = binding.editProduto.text.toString()
+            val sql = "INSERT INTO produtos VALUES(null, '$titulo', 'Descricao...');"
+
+            try {
+                bancoDados.writableDatabase.execSQL( sql )
+                Log.i("info_db", "Sucesso ao inserir")
+            } catch (e: Exception) {
+                Log.i("info_db", "Erro ao inserir")
+            }
+        }
+
+
+
 }
+
+
+
+
+
+
+
+
