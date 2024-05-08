@@ -8,7 +8,7 @@ import android.util.Log
 class DatabaseHelper(contex: Context): SQLiteOpenHelper(
     // 1) Contexto,        2) Nome do BD,
     // 3) CursosrFactory,  4) Versão do BD
-    contex, "loja.db", null, 2
+    contex, "loja.db", null, 1
 ) {
 
     companion object {
@@ -27,7 +27,6 @@ class DatabaseHelper(contex: Context): SQLiteOpenHelper(
                 " $TITULO varchar(100)," +
                 " $DESCRICAO text" +
                 ");"
-
         try {
             db?.execSQL(sql)
             Log.i("info_db", "Tabela criada com sucesso")
