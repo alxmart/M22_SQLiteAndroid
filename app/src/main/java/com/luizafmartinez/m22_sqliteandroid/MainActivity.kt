@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.luizafmartinez.m22_sqliteandroid.database.DatabaseHelper
+import com.luizafmartinez.m22_sqliteandroid.database.ProdutoDAO
 import com.luizafmartinez.m22_sqliteandroid.databinding.ActivityMainBinding
+import com.luizafmartinez.m22_sqliteandroid.model.Produto
 
 class MainActivity : AppCompatActivity() {
 
@@ -48,9 +50,22 @@ class MainActivity : AppCompatActivity() {
     }
     */
 
+    //=======================
+    //  CREATE
+    //=======================
     private fun salvar() {
 
         val titulo = binding.editProduto.text.toString()
+        val produtoDAO = ProdutoDAO(this)
+        val produto = Produto(
+            -1, //Usa -1 quando não quer definir um valor
+            titulo,
+            "descrição..."
+        )
+
+        produtoDAO.salvar(
+
+        /*val titulo = binding.editProduto.text.toString()
 
         val sql = "INSERT INTO produtos VALUES(null, '$titulo', 'Descricao...');"
 
@@ -59,9 +74,12 @@ class MainActivity : AppCompatActivity() {
             Log.i("info_db", "Sucesso ao inserir")
         } catch (e: Exception) {
             Log.i("info_db", "Erro ao inserir")
-        }
+        }*/
     }
 
+    //=======================
+    //  READ
+    //=======================
     private fun listar() {
 
         val sql = "SELECT * FROM ${DatabaseHelper.TABELA_PRODUTOS};"
@@ -83,8 +101,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //=======================
+    //  UPDATE
+    //=======================
     private fun atualizar() {
-
         val titulo = binding.editProduto.text.toString()
         //val sql = "UPDATE produtos SET titulo = '$titulo' WHERE id_produto = 1;"//definido manualmente
         val sql = "UPDATE ${DatabaseHelper.TABELA_PRODUTOS} " +
@@ -98,8 +118,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    //=======================
+    //  DELETE
+    //=======================
     private fun remover() {
-
         val sql = "DELETE FROM ${DatabaseHelper.TABELA_PRODUTOS} " +
                   "WHERE  ${DatabaseHelper.ID_PRODUTO} = 1;" // definido manualmente
         try {
@@ -108,7 +130,6 @@ class MainActivity : AppCompatActivity() {
         } catch (e: Exception) {
             Log.i("info_db", "Erro ao remover")
         }
-
     }
 
 }
