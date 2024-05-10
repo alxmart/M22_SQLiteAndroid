@@ -67,6 +67,8 @@ class MainActivity : AppCompatActivity() {
                 "Sucesso ao cadastrar produto",
                 Toast.LENGTH_SHORT
             ).show()
+            binding.editProduto.setText("")
+            //binding.editProduto.text.clear()
         } else {
             Toast.makeText(
                 this,
@@ -137,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         val produtoDAO = ProdutoDAO(this)
         //Usa -1 quando não quer definir um valor
         val produto = Produto(
-            4, titulo, "descrição..."
+            1, titulo, "descrição..."
         )
         produtoDAO.atualizar(produto)
     }
