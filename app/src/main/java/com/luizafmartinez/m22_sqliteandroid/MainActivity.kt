@@ -2,6 +2,7 @@ package com.luizafmartinez.m22_sqliteandroid
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.luizafmartinez.m22_sqliteandroid.database.DatabaseHelper
 import com.luizafmartinez.m22_sqliteandroid.database.ProdutoDAO
@@ -57,11 +58,22 @@ class MainActivity : AppCompatActivity() {
 
         val titulo = binding.editProduto.text.toString()
         val produtoDAO = ProdutoDAO(this)
-
         val produto = Produto(
             -1, titulo, "descrição..."
         )
-        produtoDAO.salvar(produto)
+        if (produtoDAO.salvar(produto)) {
+            Toast.makeText(
+                this,
+                "Sucesso ao cadastrar produto",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            Toast.makeText(
+                this,
+                "Erro ao cadastrar produto",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
     }
 
     /*
@@ -73,6 +85,7 @@ class MainActivity : AppCompatActivity() {
     } catch (e: Exception) {
         Log.i("info_db", "Erro ao inserir")
     }
+
     */
 
     //=======================
@@ -83,11 +96,16 @@ class MainActivity : AppCompatActivity() {
         val produtoDAO = ProdutoDAO(this)
         val listaProdutos = produtoDAO.listar()
 
+        var texto = ""
+
         if (listaProdutos.isNotEmpty()) {
             listaProdutos.forEach { produto ->
-                Log.i("info_db",
-                    "id: ${produto.idProduto}, titulo: ${produto.titulo}")
+                texto += "${produto.idProduto}, titulo: ${produto.titulo} \n"
+                Log.i("info_db","id: ${produto.idProduto}, titulo: ${produto.titulo}")
             }
+            binding.textResultado.text = texto
+        } else {
+            binding.textResultado.text = "Nenhum item cadastrado"
         }
     }
 
@@ -121,7 +139,7 @@ class MainActivity : AppCompatActivity() {
         val produto = Produto(
             4, titulo, "descrição..."
         )
-        produtoDAO.atualizar( produto )
+        produtoDAO.atualizar(produto)
     }
 
     //val sql = "UPDATE produtos SET titulo = '$titulo' WHERE id_produto = 1;"//definido manualmente

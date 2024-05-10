@@ -1,21 +1,30 @@
 package com.luizafmartinez.m22_sqliteandroid.database
 
+import android.content.ContentValues
 import android.content.Context
 import android.util.Log
 import com.luizafmartinez.m22_sqliteandroid.model.Produto
 
 class ProdutoDAO(context: Context) : IProdutoDAO {
 
-    val escrita = DatabaseHelper(context).writableDatabase
-    val leitura = DatabaseHelper(context).readableDatabase
+    private val escrita = DatabaseHelper(context).writableDatabase
+    private val leitura = DatabaseHelper(context).readableDatabase
 
     override fun salvar(produto: Produto): Boolean {
+        //val titulo = produto.titulo
+        //val sql = "INSERT INTO produtos VALUES(null, '$titulo', 'Descricao...');"
+        val valores = ContentValues()
 
-        val titulo = produto.titulo
-        val sql = "INSERT INTO produtos VALUES(null, '$titulo', 'Descricao...');"
+        valores.put("${DatabaseHelper.TITULO}", produto.titulo)
+        valores.put("${DatabaseHelper.DESCRICAO}", produto.descricao)
 
         try {
-            escrita.execSQL(sql)
+            //escrita.execSQL(sql)
+            escrita.insert(
+                DatabaseHelper.TABELA_PRODUTOS,
+                null,
+                valores
+            )
             Log.i("info_db", "Sucesso ao inserir")
         } catch (e: Exception) {
             Log.i("info_db", "Erro ao inserir")
@@ -49,14 +58,23 @@ class ProdutoDAO(context: Context) : IProdutoDAO {
 
     override fun atualizar(produto: Produto): Boolean {
 
-        val titulo = produto.titulo
+        //val titulo = produto.titulo
         val idProduto = produto.idProduto
 
-        val sql = "UPDATE ${DatabaseHelper.TABELA_PRODUTOS} " +
+        /*val sql = "UPDATE ${DatabaseHelper.TABELA_PRODUTOS} " +
                  "SET ${DatabaseHelper.TITULO} = '$titulo' " +
-                "WHERE  ${DatabaseHelper.ID_PRODUTO} = $idProduto;" // definido manualmente
+                "WHERE  ${DatabaseHelper.ID_PRODUTO} = $idProduto;" // definido manualmente*/
+        val valores = ContentValues()
+        valores.put("${DatabaseHelper.TITULO}", produto.titulo)
+
         try {
-            escrita.execSQL(sql)
+            //escrita.execSQL(sql)
+            escrita.insert(
+                DatabaseHelper.TABELA_PRODUTOS,
+                null,
+                valores
+            )
+
             Log.i("info_db", "Sucesso ao atualizar")
         } catch (e: Exception) {
             Log.i("info_db", "Erro ao atualizar")
@@ -77,6 +95,4 @@ class ProdutoDAO(context: Context) : IProdutoDAO {
         }
         return false
     }
-
-
 }
