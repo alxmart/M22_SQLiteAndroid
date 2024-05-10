@@ -9,10 +9,11 @@ class ProdutoDAO(context: Context) : IProdutoDAO {
     val escrita = DatabaseHelper(context).writableDatabase
     val leitura = DatabaseHelper(context).readableDatabase
 
-
     override fun salvar(produto: Produto): Boolean {
+
         val titulo = produto.titulo
         val sql = "INSERT INTO produtos VALUES(null, '$titulo', 'Descricao...');"
+
         try {
             escrita.execSQL(sql)
             Log.i("info_db", "Sucesso ao inserir")
@@ -47,10 +48,13 @@ class ProdutoDAO(context: Context) : IProdutoDAO {
     }
 
     override fun atualizar(produto: Produto): Boolean {
+
         val titulo = produto.titulo
+        val idProduto = produto.idProduto
+
         val sql = "UPDATE ${DatabaseHelper.TABELA_PRODUTOS} " +
-                "SET    ${DatabaseHelper.TITULO} = '$titulo', " +
-                "WHERE  ${DatabaseHelper.ID_PRODUTO} = 1;" // definido manualmente
+                 "SET ${DatabaseHelper.TITULO} = '$titulo' " +
+                "WHERE  ${DatabaseHelper.ID_PRODUTO} = $idProduto;" // definido manualmente
         try {
             escrita.execSQL(sql)
             Log.i("info_db", "Sucesso ao atualizar")
@@ -71,7 +75,7 @@ class ProdutoDAO(context: Context) : IProdutoDAO {
             Log.i("info_db", "Erro ao remover")
             return false
         }
-        return true
+        return false
     }
 
 

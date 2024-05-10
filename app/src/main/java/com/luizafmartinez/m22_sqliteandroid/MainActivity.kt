@@ -54,12 +54,12 @@ class MainActivity : AppCompatActivity() {
     //  CREATE
     //=======================
     private fun salvar() {
+
         val titulo = binding.editProduto.text.toString()
         val produtoDAO = ProdutoDAO(this)
+
         val produto = Produto(
-            -1, //Usa -1 quando não quer definir um valor
-            titulo,
-            "descrição..."
+            -1, titulo, "descrição..."
         )
         produtoDAO.salvar(produto)
     }
@@ -79,8 +79,10 @@ class MainActivity : AppCompatActivity() {
     //  READ
     //=======================
     private fun listar() {
+
         val produtoDAO = ProdutoDAO(this)
         val listaProdutos = produtoDAO.listar()
+
         if (listaProdutos.isNotEmpty()) {
             listaProdutos.forEach { produto ->
                 Log.i("info_db",
@@ -112,14 +114,14 @@ class MainActivity : AppCompatActivity() {
     //  UPDATE
     //=======================
     private fun atualizar() {
+
         val titulo = binding.editProduto.text.toString()
         val produtoDAO = ProdutoDAO(this)
+        //Usa -1 quando não quer definir um valor
         val produto = Produto(
-            -1, //Usa -1 quando não quer definir um valor
-            titulo,
-            "descrição..."
+            4, titulo, "descrição..."
         )
-        produtoDAO.atualizar(produto)
+        produtoDAO.atualizar( produto )
     }
 
     //val sql = "UPDATE produtos SET titulo = '$titulo' WHERE id_produto = 1;"//definido manualmente
@@ -137,6 +139,7 @@ class MainActivity : AppCompatActivity() {
     //  DELETE
     //=======================
     private fun remover() {
+
         val produtoDAO = ProdutoDAO(this)
         produtoDAO.remover(3)
     }
